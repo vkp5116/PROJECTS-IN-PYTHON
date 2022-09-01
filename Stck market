@@ -1,1 +1,224 @@
+For this project, I will assume the role of a Data Scientist / Data Analyst working for a new startup investment firm that helps customers invest their money in stocks. My job is to extract financial data like historical share price and quarterly revenue reportings from various sources using Python libraries and webscraping on popular stocks. After collecting this data I will visualize it in a dashboard to identify patterns or trends. The stocks I will work with are Tesla, Amazon, AMD, and GameStop.
+!pip install yfinance==0.1.67
+Collecting yfinance==0.1.67
+  Downloading yfinance-0.1.67-py2.py3-none-any.whl (25 kB)
+Collecting multitasking>=0.0.7
+  Downloading multitasking-0.0.11-py3-none-any.whl (8.5 kB)
+Requirement already satisfied: pandas>=0.24 in c:\users\varun\anaconda3\lib\site-packages (from yfinance==0.1.67) (1.4.2)
+Requirement already satisfied: requests>=2.20 in c:\users\varun\anaconda3\lib\site-packages (from yfinance==0.1.67) (2.27.1)
+Requirement already satisfied: numpy>=1.15 in c:\users\varun\anaconda3\lib\site-packages (from yfinance==0.1.67) (1.21.5)
+Requirement already satisfied: lxml>=4.5.1 in c:\users\varun\anaconda3\lib\site-packages (from yfinance==0.1.67) (4.8.0)
+Requirement already satisfied: pytz>=2020.1 in c:\users\varun\anaconda3\lib\site-packages (from pandas>=0.24->yfinance==0.1.67) (2021.3)
+Requirement already satisfied: python-dateutil>=2.8.1 in c:\users\varun\anaconda3\lib\site-packages (from pandas>=0.24->yfinance==0.1.67) (2.8.2)
+Requirement already satisfied: six>=1.5 in c:\users\varun\anaconda3\lib\site-packages (from python-dateutil>=2.8.1->pandas>=0.24->yfinance==0.1.67) (1.16.0)
+Requirement already satisfied: certifi>=2017.4.17 in c:\users\varun\anaconda3\lib\site-packages (from requests>=2.20->yfinance==0.1.67) (2022.6.15)
+Requirement already satisfied: idna<4,>=2.5 in c:\users\varun\anaconda3\lib\site-packages (from requests>=2.20->yfinance==0.1.67) (3.3)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in c:\users\varun\anaconda3\lib\site-packages (from requests>=2.20->yfinance==0.1.67) (1.26.9)
+Requirement already satisfied: charset-normalizer~=2.0.0 in c:\users\varun\anaconda3\lib\site-packages (from requests>=2.20->yfinance==0.1.67) (2.0.4)
+Installing collected packages: multitasking, yfinance
+Successfully installed multitasking-0.0.11 yfinance-0.1.67
+import yfinance as yf
+import pandas as pd
+apple_stock = yf.Ticker("AAPL")
+apple_info = apple_stock.info
+apple_info
+{'zip': '95014',
+ 'sector': 'Technology',
+ 'fullTimeEmployees': 154000,
+ 'longBusinessSummary': 'Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. It also sells various related services. In addition, the company offers iPhone, a line of smartphones; Mac, a line of personal computers; iPad, a line of multi-purpose tablets; AirPods Max, an over-ear wireless headphone; and wearables, home, and accessories comprising AirPods, Apple TV, Apple Watch, Beats products, HomePod, and iPod touch. Further, it provides AppleCare support services; cloud services store services; and operates various platforms, including the App Store that allow customers to discover and download applications and digital content, such as books, music, video, games, and podcasts. Additionally, the company offers various services, such as Apple Arcade, a game subscription service; Apple Music, which offers users a curated listening experience with on-demand radio stations; Apple News+, a subscription news and magazine service; Apple TV+, which offers exclusive original content; Apple Card, a co-branded credit card; and Apple Pay, a cashless payment service, as well as licenses its intellectual property. The company serves consumers, and small and mid-sized businesses; and the education, enterprise, and government markets. It distributes third-party applications for its products through the App Store. The company also sells its products through its retail and online stores, and direct sales force; and third-party cellular network carriers, wholesalers, retailers, and resellers. Apple Inc. was incorporated in 1977 and is headquartered in Cupertino, California.',
+ 'city': 'Cupertino',
+ 'phone': '408 996 1010',
+ 'state': 'CA',
+ 'country': 'United States',
+ 'companyOfficers': [],
+ 'website': 'https://www.apple.com',
+ 'maxAge': 1,
+ 'address1': 'One Apple Park Way',
+ 'industry': 'Consumer Electronics',
+ 'ebitdaMargins': 0.3343,
+ 'profitMargins': 0.25709,
+ 'grossMargins': 0.43313998,
+ 'operatingCashflow': 118224003072,
+ 'revenueGrowth': 0.019,
+ 'operatingMargins': 0.30533,
+ 'ebitda': 129556996096,
+ 'targetLowPrice': 136,
+ 'recommendationKey': 'buy',
+ 'grossProfits': 152836000000,
+ 'freeCashflow': 83344621568,
+ 'targetMedianPrice': 185,
+ 'currentPrice': 157.4399,
+ 'earningsGrowth': -0.077,
+ 'currentRatio': 0.865,
+ 'returnOnAssets': 0.22204,
+ 'numberOfAnalystOpinions': 44,
+ 'targetMeanPrice': 184.01,
+ 'debtToEquity': 205.984,
+ 'returnOnEquity': 1.62816,
+ 'targetHighPrice': 220,
+ 'totalCash': 48230998016,
+ 'totalDebt': 119691001856,
+ 'totalRevenue': 387541991424,
+ 'totalCashPerShare': 3.001,
+ 'financialCurrency': 'USD',
+ 'revenuePerShare': 23.732,
+ 'quickRatio': 0.697,
+ 'recommendationMean': 1.9,
+ 'exchange': 'NMS',
+ 'shortName': 'Apple Inc.',
+ 'longName': 'Apple Inc.',
+ 'exchangeTimezoneName': 'America/New_York',
+ 'exchangeTimezoneShortName': 'EDT',
+ 'isEsgPopulated': False,
+ 'gmtOffSetMilliseconds': '-14400000',
+ 'quoteType': 'EQUITY',
+ 'symbol': 'AAPL',
+ 'messageBoardId': 'finmb_24937',
+ 'market': 'us_market',
+ 'annualHoldingsTurnover': None,
+ 'enterpriseToRevenue': 6.774,
+ 'beta3Year': None,
+ 'enterpriseToEbitda': 20.263,
+ '52WeekChange': 0.023234606,
+ 'morningStarRiskRating': None,
+ 'forwardEps': 6.45,
+ 'revenueQuarterlyGrowth': None,
+ 'sharesOutstanding': 16070800384,
+ 'fundInceptionDate': None,
+ 'annualReportExpenseRatio': None,
+ 'totalAssets': None,
+ 'bookValue': 3.61,
+ 'sharesShort': 115400891,
+ 'sharesPercentSharesOut': 0.0072000003,
+ 'fundFamily': None,
+ 'lastFiscalYearEnd': 1632528000,
+ 'heldPercentInstitutions': 0.59785,
+ 'netIncomeToCommon': 99632996352,
+ 'trailingEps': 6.05,
+ 'lastDividendValue': 0.23,
+ 'SandP52WeekChange': -0.12826902,
+ 'priceToBook': 43.61216,
+ 'heldPercentInsiders': 0.00068999996,
+ 'nextFiscalYearEnd': 1695600000,
+ 'yield': None,
+ 'mostRecentQuarter': 1656115200,
+ 'shortRatio': 1.69,
+ 'sharesShortPreviousMonthDate': 1657843200,
+ 'floatShares': 16054038418,
+ 'beta': 1.230174,
+ 'enterpriseValue': 2625263108096,
+ 'priceHint': 2,
+ 'threeYearAverageReturn': None,
+ 'lastSplitDate': 1598832000,
+ 'lastSplitFactor': '4:1',
+ 'legalType': None,
+ 'lastDividendDate': 1659657600,
+ 'morningStarOverallRating': None,
+ 'earningsQuarterlyGrowth': -0.106,
+ 'priceToSalesTrailing12Months': 6.5288024,
+ 'dateShortInterest': 1660521600,
+ 'pegRatio': 2.72,
+ 'ytdReturn': None,
+ 'forwardPE': 24.409286,
+ 'lastCapGain': None,
+ 'shortPercentOfFloat': 0.0072000003,
+ 'sharesShortPriorMonth': 104993162,
+ 'impliedSharesOutstanding': 0,
+ 'category': None,
+ 'fiveYearAverageReturn': None,
+ 'previousClose': 157.22,
+ 'regularMarketOpen': 156.64,
+ 'twoHundredDayAverage': 161.02464,
+ 'trailingAnnualDividendYield': 0.005660857,
+ 'payoutRatio': 0.1471,
+ 'volume24Hr': None,
+ 'regularMarketDayHigh': 157.68,
+ 'navPrice': None,
+ 'averageDailyVolume10Day': 67847900,
+ 'regularMarketPreviousClose': 157.22,
+ 'fiftyDayAverage': 156.042,
+ 'trailingAnnualDividendRate': 0.89,
+ 'open': 156.64,
+ 'toCurrency': None,
+ 'averageVolume10days': 67847900,
+ 'expireDate': None,
+ 'algorithm': None,
+ 'dividendRate': 0.92,
+ 'exDividendDate': 1659657600,
+ 'circulatingSupply': None,
+ 'startDate': None,
+ 'regularMarketDayLow': 154.67,
+ 'currency': 'USD',
+ 'trailingPE': 26.023123,
+ 'regularMarketVolume': 63329306,
+ 'lastMarket': None,
+ 'maxSupply': None,
+ 'openInterest': None,
+ 'marketCap': 2530185052160,
+ 'volumeAllCurrencies': None,
+ 'strikePrice': None,
+ 'averageVolume': 73513869,
+ 'dayLow': 154.67,
+ 'ask': 157.01,
+ 'askSize': 1000,
+ 'volume': 63329306,
+ 'fiftyTwoWeekHigh': 182.94,
+ 'fromCurrency': None,
+ 'fiveYearAvgDividendYield': 1.05,
+ 'fiftyTwoWeekLow': 129.04,
+ 'bid': 156.96,
+ 'tradeable': False,
+ 'dividendYield': 0.0058,
+ 'bidSize': 800,
+ 'dayHigh': 157.68,
+ 'coinMarketCapLink': None,
+ 'regularMarketPrice': 157.4399,
+ 'preMarketPrice': 156.69,
+ 'logo_url': 'https://logo.clearbit.com/apple.com'}
+# I will use the history() method to get the share price of the stock
+apple_share_price = apple_stock.history(period = "max")
+# This will return a data frame 
+apple_share_price.head()
+Open	High	Low	Close	Volume	Dividends	Stock Splits
+Date							
+1980-12-12	0.100040	0.100474	0.100040	0.100040	469033600	0.0	0.0
+1980-12-15	0.095255	0.095255	0.094820	0.094820	175884800	0.0	0.0
+1980-12-16	0.088296	0.088296	0.087861	0.087861	105728000	0.0	0.0
+1980-12-17	0.090035	0.090470	0.090035	0.090035	86441600	0.0	0.0
+1980-12-18	0.092646	0.093081	0.092646	0.092646	73449600	0.0	0.0
+apple_share_price.reset_index(inplace=True)
+# Now, I will plot date vs open price 
+apple_share_price.plot(x="Date",y="Open")
+<AxesSubplot:xlabel='Date'>
 
+Dividends are the distribution of a companys profits to shareholders. In this case they are defined as an amount of money returned per share an investor owns.
+
+apple_stock.dividends
+Date
+1987-05-11    0.000536
+1987-08-10    0.000536
+1987-11-17    0.000714
+1988-02-12    0.000714
+1988-05-16    0.000714
+                ...   
+2021-08-06    0.220000
+2021-11-05    0.220000
+2022-02-04    0.220000
+2022-05-06    0.230000
+2022-08-05    0.230000
+Name: Dividends, Length: 76, dtype: float64
+apple_stock.dividends.plot()
+<AxesSubplot:xlabel='Date'>
+
+I will analyse the AMD stock
+amd_stock = yf.Ticker("AMD")
+amd_info = amd_stock.info
+amd_info["country"]
+amd_info["sector"]
+'Technology'
+amd_share_price = amd_stock.history(period = "max")
+amd_share_price.reset_index(inplace=True)
+---------------------------------------------------------------------------
+
+
+​
