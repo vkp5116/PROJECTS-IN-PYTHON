@@ -1,3 +1,5 @@
+# TIC TAC TOE ...
+
 # creating the display function and making the tictac toe board
 
 def display(board):
